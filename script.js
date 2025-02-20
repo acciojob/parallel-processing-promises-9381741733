@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const images = [
         { url: "https://picsum.photos/id/237/200/300" },
         { url: "https://picsum.photos/id/238/200/300" },
-        { url: "https://picsum.photos/id/239/200/300" },
+        { url: "https://picsum.photos/id/239/200/300" }
     ];
 
     function downloadImage(url) {
@@ -21,20 +21,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function downloadImages() {
+        // Reset previous content
         output.innerHTML = "";
         errorDiv.innerHTML = "";
-        loading.style.display = "block";
+        loading.style.display = "block"; // Show loading message
 
         const imagePromises = images.map(img => downloadImage(img.url));
 
         Promise.all(imagePromises)
-            .then(images => {
-                loading.style.display = "none";
-                images.forEach(img => output.appendChild(img));
+            .then(downloadedImages => {
+                loading.style.display = "none"; // Hide loading message
+                downloadedImages.forEach(img => output.appendChild(img));
             })
             .catch(error => {
-                loading.style.display = "none";
-                errorDiv.innerText = error;
+                loading.style.display = "none"; // Hide loading message
+                errorDiv.innerText = error; // Display error message
             });
     }
 
